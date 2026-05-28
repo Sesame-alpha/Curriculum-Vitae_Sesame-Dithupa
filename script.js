@@ -1,114 +1,49 @@
+// 3D hover effect
+document.querySelectorAll(".skill-card, .project-card, .certificate-card, .contact-card")
+.forEach(card => {
 
+card.addEventListener("mousemove", (e) => {
 
-```javascript id="sjd82h"
-// 3D CARD EFFECT
+const rect = card.getBoundingClientRect();
 
-const cards = document.querySelectorAll(
-    ".skill-card, .project-card, .certificate-card, .contact-card"
-);
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
 
-cards.forEach(card => {
+const centerX = rect.width / 2;
+const centerY = rect.height / 2;
 
-    card.addEventListener("mousemove", (e) => {
+const rotateX = (y - centerY) / 15;
+const rotateY = (centerX - x) / 15;
 
-        const rect = card.getBoundingClientRect();
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / 18);
-        const rotateY = ((centerX - x) / 18);
-
-        card.style.transform = `
-        perspective(1000px)
-        rotateX(${rotateX}deg)
-        rotateY(${rotateY}deg)
-        scale(1.04)
-        `;
-    });
-
-    card.addEventListener("mouseleave", () => {
-
-        card.style.transform = `
-        perspective(1000px)
-        rotateX(0deg)
-        rotateY(0deg)
-        scale(1)
-        `;
-    });
+card.style.transform =
+`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
 
 });
 
-// TYPING EFFECT
-
-const titles = document.querySelectorAll(".page-title");
-
-titles.forEach(title => {
-
-    const text = title.innerText;
-
-    title.innerText = "";
-
-    let i = 0;
-
-    function type(){
-
-        if(i < text.length){
-
-            title.innerHTML += text.charAt(i);
-
-            i++;
-
-            setTimeout(type, 60);
-        }
-    }
-
-    type();
+card.addEventListener("mouseleave", () => {
+card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale(1)";
 });
-
-// PARALLAX EFFECT
-
-window.addEventListener("scroll", () => {
-
-    const scroll = window.scrollY;
-
-    document.body.style.backgroundPositionY =
-    `${scroll * 0.5}px`;
 
 });
 
-// FLOATING GLOW EFFECT
 
+// smooth scroll glow effect
 document.addEventListener("mousemove", (e) => {
 
-    const glow = document.createElement("div");
+const glow = document.createElement("div");
 
-    glow.style.position = "absolute";
-    glow.style.width = "15px";
-    glow.style.height = "15px";
+glow.style.position = "absolute";
+glow.style.width = "12px";
+glow.style.height = "12px";
+glow.style.borderRadius = "50%";
+glow.style.background = "rgba(255,105,180,0.4)";
+glow.style.left = e.pageX + "px";
+glow.style.top = e.pageY + "px";
+glow.style.pointerEvents = "none";
+glow.style.zIndex = "9999";
 
-    glow.style.borderRadius = "50%";
+document.body.appendChild(glow);
 
-    glow.style.background =
-    "rgba(0,170,255,0.3)";
-
-    glow.style.pointerEvents = "none";
-
-    glow.style.left = e.pageX + "px";
-    glow.style.top = e.pageY + "px";
-
-    glow.style.zIndex = "9999";
-
-    document.body.appendChild(glow);
-
-    setTimeout(() => {
-
-        glow.remove();
-
-    }, 400);
+setTimeout(() => glow.remove(), 400);
 
 });
-```
